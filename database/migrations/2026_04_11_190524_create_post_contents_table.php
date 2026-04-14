@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('post_contents', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->enum('type', ['paragraph', 'image', 'feature', 'code'])->default('paragraph');
+            $table->enum('type', ['paragraph', 'feature', 'code'])->default('paragraph');
             $table->text('body')->nullable();
             $table->integer('order')->default(0);
             $table->foreignId('post_id')->constrained()->cascadeOnDelete();

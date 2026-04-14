@@ -1,11 +1,87 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* 1. تعريف المسارات لضمان عمل Breeze وقالب Atom */
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../views/**/*.blade.php";
+
+/* 2. استدعاء الإضافات التي ظهرت في كود الـ CSS الخاص بك */
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  /* 3. الألوان المستخرجة من ملفك الضخم */
+  --color-primary: #5540af;
+  /* البنفسجي الأساسي */
+  --color-secondary: #252426;
+  /* الأسود الفحمي */
+  --color-yellow: #f9e71c;
+  /* الأصفر المشع */
+  --color-lila: #e6e5ec;
+  /* اللافندر */
+  --color-grey-10: #6c6b6d;
+  --color-grey-20: #7c7c7c;
+  --color-grey-30: #919091;
+  --color-grey-40: #929293;
+  --color-grey-50: #f4f3f8;
+  --color-grey-60: #edebf6;
+  --color-grey-70: #d8d8d8;
+
+  /* تدرجات الـ Hero والـ Blog المستخرجة */
+  --color-hero-gradient-from: rgba(85, 64, 174, 0.95);
+  --color-hero-gradient-to: rgba(65, 47, 144, 0.93);
+
+  --color-blog-from: #8f9098;
+  --color-blog-to: #222222;
+
+  /* 4. الخطوط (Fonts) */
+  --font-header: "Raleway", sans-serif;
+  --font-body: "Open Sans", sans-serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  /* لـ Breeze */
+
+  /* 5. المقاسات الخاصة (Spacing) - القالب يعتمد عليها بكثرة */
+  --spacing-13: 3.25rem;
+  --spacing-15: 3.75rem;
+  --spacing-17: 4.25rem;
+  --spacing-18: 4.5rem;
+  --spacing-19: 4.75rem;
+  --spacing-42: 10.5rem;
+  --spacing-76: 19rem;
+  --spacing-84: 21rem;
+  --spacing-88: 22rem;
+  --spacing-92: 23rem;
+  --spacing-100: 25rem;
+  --spacing-128: 32rem;
+
+  /* 6. الشاشات (Breakpoints) */
+  --breakpoint-xs: 375px;
+
+  /* 7. الطبقات (Z-index) */
+  --z-60: 60;
+  --z-70: 70;
+}
+
+@layer base {
+  html {
+    /* نستخدم المتغير المعرف فوق --font-body */
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* 8. تعريف الـ Utilities المخصصة التي كانت موجودة في ملفك */
+@utility shadow-default {
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.06);
+}
+
+@utility shadow-md-custom {
+  box-shadow: 0 -3px 36px rgba(0, 0, 0, 0.12);
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
 }

@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
+// #[Fillable(['name', 'email', 'password', 'mobile'])]
+// #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -36,8 +36,8 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function image()
+   public function profile()
     {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->hasOne(Profile::class);
     }
 }
