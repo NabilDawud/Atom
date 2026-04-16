@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth ">
 
 <head>
     <meta charset="utf-8" />
@@ -8,7 +8,7 @@
 
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
 
-    <title>@yield('title') | {{ config('app.name') }}</title>
+    <title>@yield('title', env('APP_NAME'))</title>
 
     <meta property="og:title" content="Homepage | Atom Template" />
 
@@ -83,67 +83,83 @@
 
                             <li class="group pl-6">
 
-                                <span @click="triggerNavItem('#about')"
-                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">About</span>
+                                <a href="{{ route('front.index') }}#about"
+                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">About</a>
 
                                 <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                             </li>
 
                             <li class="group pl-6">
 
-                                <span @click="triggerNavItem('#services')"
-                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Services</span>
+                                <a href="{{ route('front.index') }}#services"
+                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Services</a>
 
                                 <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                             </li>
 
                             <li class="group pl-6">
 
-                                <span @click="triggerNavItem('#portfolio')"
-                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Portfolio</span>
+                                <a href="{{ route('front.index') }}#portfolio"
+                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Portfolio</a>
 
                                 <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                             </li>
 
                             <li class="group pl-6">
 
-                                <span @click="triggerNavItem('#clients')"
-                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Clients</span>
+                                <a href="{{ route('front.index') }}#clients"
+                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Clients</a>
 
                                 <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                             </li>
 
                             <li class="group pl-6">
 
-                                <span @click="triggerNavItem('#work')"
-                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Work</span>
+                                <a href="{{ route('front.index') }}#work"
+                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Work</a>
 
                                 <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                             </li>
 
                             <li class="group pl-6">
 
-                                <span @click="triggerNavItem('#statistics')"
-                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Statistics</span>
+                                <a href="{{ route('front.index') }}#statistics"
+                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Statistics</a>
 
                                 <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                             </li>
 
                             <li class="group pl-6">
 
-                                <span @click="triggerNavItem('#blog')"
-                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Blog</span>
+                                <a href="{{ route('front.index') }}#blog"
+                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Blog</a>
 
                                 <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                             </li>
 
                             <li class="group pl-6">
 
-                                <span @click="triggerNavItem('#contact')"
-                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Contact</span>
+                                <a href="{{ route('front.index') }}#contact"
+                                    class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Contact</a>
 
                                 <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
                             </li>
+
+                            @auth
+                                <li class="group pl-6">
+                                    <a href="{{ route('dashboard') }}"
+                                        class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Dashboard</a>
+
+                                    <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
+                                </li>
+                            @else
+                                <li class="group pl-6">
+                                    <a href="{{ route('login') }}"
+                                        class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">login</a>
+
+                                    <span class="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
+                                </li>
+                            @endauth
 
                         </ul>
                     </div>
@@ -155,8 +171,8 @@
                 </div>
             </div>
 
-            <div class="pointer-events-none fixed inset-0 z-70 min-h-screen bg-black bg-opacity-70 opacity-0 transition-opacity lg:hidden"
-                :class="{ 'opacity-100 pointer-events-auto': mobileMenu }">
+            <div class="pointer-events-none fixed inset-0 z-70 min-h-screen bg-black/70 opacity-0 transition-opacity lg:hidden"
+                :class="{ 'opacity-100 !pointer-events-auto': mobileMenu }" @click="mobileMenu = false">
                 <div class="absolute right-0 min-h-screen w-2/3 bg-primary py-4 px-8 shadow md:w-1/3">
                     <button class="absolute top-0 right-0 mt-4 mr-4" @click="mobileMenu = false">
                         <img src="{{ asset('Aassets/img/icon-close.svg') }}" class="h-10 w-auto" alt="" />
@@ -166,66 +182,75 @@
 
                         <li class="py-2">
 
-                            <span @click="triggerMobileNavItem('#about')"
-                                class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">About</span>
+                            <a href="{{ route('front.index') }}#about"
+                                class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">About</a>
 
                         </li>
 
                         <li class="py-2">
 
-                            <span @click="triggerMobileNavItem('#services')"
-                                class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Services</span>
+                            <a href="{{ route('front.index') }}#services"
+                                class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Services</a>
 
                         </li>
 
                         <li class="py-2">
 
-                            <span @click="triggerMobileNavItem('#portfolio')"
-                                class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Portfolio</span>
+                            <a href="{{ route('front.index') }}#portfolio"
+                                class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Portfolio</a>
 
                         </li>
 
                         <li class="py-2">
 
-                            <span @click="triggerMobileNavItem('#clients')"
-                                class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Clients</span>
+                            <a href="{{ route('front.index') }}#clients"
+                                class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Clients</a>
 
                         </li>
 
                         <li class="py-2">
 
-                            <span @click="triggerMobileNavItem('#work')"
-                                class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Work</span>
+                            <a href="{{ route('front.index') }}#work"
+                                class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Work</a>
 
                         </li>
 
                         <li class="py-2">
 
-                            <span @click="triggerMobileNavItem('#statistics')"
-                                class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Statistics</span>
+                            <a href="{{ route('front.index') }}#statistics"
+                                class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Statistics</a>
 
                         </li>
 
                         <li class="py-2">
 
-                            <span @click="triggerMobileNavItem('#blog')"
-                                class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Blog</span>
+                            <a href="{{ route('front.index') }}#blog"
+                                class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Blog</a>
 
                         </li>
 
                         <li class="py-2">
-
-                            <span @click="triggerMobileNavItem('#contact')"
-                                class="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">Contact</span>
-
+                            <a href="{{ route('front.index') }}#contact"
+                                class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Contact</a>
                         </li>
+                        @auth
+                            <li class="py-2">
+                                <a href="{{ route('dashboard') }}"
+                                    class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Dashboard</a>
+                            </li>
+                        @else
+                            <li class="py-2">
+                                <a href="{{ route('login') }}"
+                                    class="cursor-pointer block  pt-0.5 font-header font-semibold uppercase text-white">Login</a>
+                            </li>
+                        @endauth
 
                     </ul>
                 </div>
             </div>
 
 
-         @yield('content')
+            @yield('content')
 
             <div class="bg-primary">
                 <div class="container flex flex-col justify-between py-6 sm:flex-row">

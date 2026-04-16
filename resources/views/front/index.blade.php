@@ -1,6 +1,6 @@
 @extends('front.master')
 
-@section('title', 'Homepage')
+@section('title', 'Homepage | '. env('APP_NAME'))
 
 @section('navbar', 'absolute')
 
