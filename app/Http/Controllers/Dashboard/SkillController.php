@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 
 use function Flasher\Prime\flash;
@@ -14,7 +15,7 @@ class SkillController extends Controller
      */
     public function index()
     {
-        $skills = auth()->user()->skills()->latest()->paginate(10);
+        $skills = auth()->user()->skills()->latest('id')->paginate(10);
         return view('dashboard.skills.index', compact('skills'));
     }
 
@@ -44,32 +45,61 @@ class SkillController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Skill $skill)
     {
-        //
+        return view('dashboard.skills.show', compact('skill'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Skill $skill)
     {
-        //
+        return view('dashboard.skills.edit', compact('skill'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Skill $skill)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'percentage' => 'required|integer|min:0|max:100',
+        ]);
+
+        $skill->update($validated);
+        flash()->success('Skill updated successfully!');
+        return redirect()->route('admin.skills.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Skill $skill)
     {
-        //
+        $skill->delete();
+        flash()->success('Skill deleted successfully!');
+        return redirect()->route('admin.skills.index');
+    }
+
+    public function trash()
+    {
+        $skills = auth()->user()->skills()->onlyTrashed()->latest('id')->paginate(10);
+        return view('dashboard.skills.trash', compact('skills'));
+    }
+
+    public function restore(Skill $skill)
+    {
+        $skill->restore();
+        flash()->success('Skill restored successfully!');
+        return redirect()->route('admin.skills.trash');
+    }
+
+    public function forceDelete(Skill $skill)
+    {
+        $skill->forceDelete();
+        flash()->success('Skill permanently deleted!');
+        return redirect()->route('admin.skills.trash');
     }
 }

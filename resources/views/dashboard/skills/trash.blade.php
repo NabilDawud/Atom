@@ -15,16 +15,12 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     {{ __('Skills') }}
                 </h2>
-                <div class="trashAndCreateButtons flex items-center">
-                    <a href="{{ route('admin.skills.trash') }}"
-                        class="ms-4 inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
-                        {{ __('View Trashed Skills') }}
-                    </a>
-                    <a href="{{ route('admin.skills.create') }}"
-                        class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
-                        {{ __('Add New Skill') }}
-                    </a>
-                </div>
+
+                <a href="{{ route('admin.skills.index') }}"
+                    class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
+                    {{ __('Return Back') }}
+                </a>
+
             </div>
         </x-slot>
 
@@ -52,15 +48,11 @@
                                             <td class="py-3 px-6">{{ $skill->name }}</td>
                                             <td class="py-3 px-6">{{ $skill->percentage }}%</td>
                                             <td class="py-3 px-6">
-                                                <a href="{{ route('admin.skills.show', $skill->id) }}"
-                                                    class="inline-flex bg-blue-500 hover:bg-blue-700 transition text-white font-bolds   py-2 px-4 rounded">
-                                                    <i class="fas fa-eye"></i>
+                                                <a href="{{ route('admin.skills.restore', $skill->id) }}"
+                                                    class="inline-flex bg-amber-400 hover:bg-amber-500 transition text-white font-bolds   py-2 px-4 rounded">
+                                                    <i class="fas fa-undo"></i>
                                                 </a>
-                                                <a href="{{ route('admin.skills.edit', $skill->id) }}"
-                                                    class="inline-flex bg-green-500 hover:bg-green-700 transition text-white font-bolds  py-2 px-4 rounded ">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form action="{{ route('admin.skills.destroy', $skill->id) }}"
+                                                <form action="{{ route('admin.skills.forceDelete', $skill->id) }}"
                                                     method="POST" class="inline-block">
                                                     @csrf
                                                     @method('DELETE')

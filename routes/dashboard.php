@@ -20,6 +20,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/profile' , [ProfileController::class, 'storeAndUpdate'])->name('profiles.storeAndUpdate');
+    Route::get('/skills/trash', [SkillController::class, 'trash'])->name('skills.trash');
+    Route::get('/skills/{skill}/restore', [SkillController::class, 'restore'])->withTrashed()->name('skills.restore');
+    Route::delete('/skills/{skill}/force-delete', [SkillController::class, 'forceDelete'])->withTrashed()->name('skills.forceDelete');
     Route::resource('skills', SkillController::class);
     Route::resource('services', ServiceController::class);
     Route::resource('portfolios', PortfolioController::class);
