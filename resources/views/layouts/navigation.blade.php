@@ -65,6 +65,9 @@
                         <x-dropdown-link :href="route('admin.posts.index')">
                             {{ __('Posts') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('admin.post_contents.index')">
+                            {{ __('Post Contents') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('admin.contacts.index')">
                             {{ __('Contacts') }}
                         </x-dropdown-link>
@@ -147,6 +150,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.posts.index')">
                     {{ __('Posts') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.post_contents.index')">
+                    {{ __('Post Contents') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.contacts.index')">
                     {{ __('Contacts') }}

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('summary')->nullable();
             $table->date('published_at')->nullable();
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -52,7 +53,9 @@ class ProfileController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        auth()->user()->update($request->only('mobile'));
+        return   DB::transaction(function () use ($request) {
+
+            auth()->user()->update($request->only('mobile'));
 
         auth()->user()->profile()->updateOrCreate([
             'user_id' => auth()->id(),
@@ -77,6 +80,7 @@ class ProfileController extends Controller
         }
         flash()->success('Profile updated successfully.');
         return redirect()->route('profile.edit');
+        });
     }
 
 

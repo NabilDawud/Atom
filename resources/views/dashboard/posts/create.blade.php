@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container--default .select2-selection--multiple {
+            border-radius: 0.75rem;
+            border: 1px solid #d1d5db;
+            padding: 7px 4px 7px 7px;
+            min-height: 42px;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        .select2-container .select2-search--inline .select2-search__field {
+            height: 26px !important;
+            margin: 0 !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            height: 100% !important;
+        }
+
+        .select2-selection__choice {
+            background-color: #6366f1 !important;
+            border: none !important;
+            color: white !important;
+            border-radius: 9999px !important;
+            padding: 2px 8px 2px 20px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <x-app-layout>
+        <x-slot name="header">
+            <div class="flex justify-between items-center">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Posts') }}
+                </h2>
+                <a href="{{ route('admin.posts.index') }}"
+                    class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
+                    {{ __('Return Back') }}
+                </a>
+            </div>
+        </x-slot>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <form method="POST" action="{{ route('admin.posts.store') }}" class="space-y-6"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div>
+                                <x-input-label for="title" :value="__('Title')" />
+                                <x-text-input id="title" class="block mt-1 w-full" type="text" name="title"
+                                    required autofocus value="{{ old('title') }}" />
+                                <x-input-error :messages="$errors->get('title')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="summary" :value="__('Summary')" />
+                                <textarea name="summary" id="summary" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" rows="4">{{ old('summary') }}</textarea>
+                                <x-input-error :messages="$errors->get('summary')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="published_at" :value="__('Published At')" />
+                                <x-text-input id="published_at" class="block mt-1 w-full" type="date"
+                                    name="published_at" required autofocus value="{{ old('published_at') }}" />
+                                <x-input-error :messages="$errors->get('published_at')" class="mt-2" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="image" :value="__('Image')" />
+                                <x-text-input id="image" class="block mt-1 border outline-indigo-500 w-full bg-white px-3 py-2" type="file"
+                                    name="image" required autofocus value="{{ old('image') }}" />
+                                <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                            </div>
+
+
+                            <div class="mt-4">
+                                <x-input-label for="categories" :value="__('Categories')" class="mb-1"/>
+
+                                <select name="categories[]" id="categories" multiple class="w-full">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ in_array($category->id, old('categories', [])) ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                <x-input-error :messages="$errors->get('categories')" class="mt-2" />
+                            </div>
+
+
+                            <div class="flex items-center mt-4">
+                                <x-primary-button>
+                                    {{ __('Create') }}
+                                </x-primary-button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </x-app-layout>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#categories').select2({
+                placeholder: "Select categories",
+                allowClear: true,
+                width: '100%'
+            });
+        });
+    </script>
+</body>
+
+</html>

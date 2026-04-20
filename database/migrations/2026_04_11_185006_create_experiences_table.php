@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('description');
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

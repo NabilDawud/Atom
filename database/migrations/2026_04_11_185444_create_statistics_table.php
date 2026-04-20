@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('statistics', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('title');
+            $table->string('value');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -45,4 +45,29 @@ class User extends Authenticatable
     {
         return $this->hasMany(Skill::class);
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    public function portfolios()
+    {
+        return $this->hasMany(Portfolio::class);
+    }
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class);
+    }
+
+    public function statistics()
+    {
+        return $this->hasMany(Statistic::class);
+    }
 }

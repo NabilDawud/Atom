@@ -15,7 +15,7 @@
                  <x-input-error :messages="$errors->get('image')" class="mt-2" />
              </div>
              @isset(auth()->user()->profile->image->path)
-                 <div class="my-4">
+                 <div class="-mt-2">
                      <img src="{{ asset(auth()->user()->profile->image->path) }}" alt="Profile Image"
                          class="w-32 h-32 object-cover object-top rounded">
                  </div>

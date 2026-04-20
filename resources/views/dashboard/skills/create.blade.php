@@ -31,14 +31,14 @@
                             <div>
                                 <x-input-label for="name" :value="__('Skill Name')" />
                                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                                    required autofocus />
+                                    required autofocus value="{{ old('name') }}" />
                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
 
                             <div>
                                 <x-input-label for="percentage" :value="__('Percentage')" />
                                 <x-text-input id="percentage" class="block mt-1 w-full" type="number" name="percentage"
-                                    required />
+                                    required value="{{ old('percentage') }}" />
                                 <x-input-error :messages="$errors->get('percentage')" class="mt-2" />
                             </div>
 
