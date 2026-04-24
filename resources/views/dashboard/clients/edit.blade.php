@@ -27,7 +27,7 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <form method="POST" action="{{ route('admin.clients.update', $client->id) }}"
-                            enctype="multipart/form-data" class="space-y-6">
+                            enctype="multipart/form-data" class="space-y-10">
                             @csrf
                             @method('PUT')
                             <div>
@@ -40,11 +40,11 @@
                             @isset($client->image->path)
                                 <div class="-mt-2">
                                     <img src="{{ asset($client->image->path) }}" alt="{{ $client->name }}"
-                                        class="w-24 h-24 object-cover rounded ">
+                                        class="w-auto h-12  object-cover rounded ">
                                 </div>
                             @endisset
 
-                            <div class="flex items-center mt-4">
+                            <div class="flex items-center">
                                 <x-primary-button>
                                     {{ __('Update Client') }}
                                 </x-primary-button>

@@ -41,7 +41,7 @@
                                         <th class="py-3 px-6 text-left">Title</th>
                                         <th class="py-3 px-6 text-left">Type</th>
                                         <th class="py-3 px-6 text-left">Order</th>
-                                        <th class="py-3 px-6 text-left">Posts</th>
+                                        <th class="py-3 px-6 text-left">Post</th>
                                         <th class="py-3 px-6 text-left" width="220px">Actions</th>
 
                                     </tr>
@@ -55,12 +55,12 @@
                                             <td class="py-3 px-6">{{ $postContent->type }} </td>
                                             <td class="py-3 px-6">{{ $postContent->order }} </td>
                                             <td class="py-3 px-6"><a 
-                                                    href="{{ route('admin.posts.show', $postContent->post->id) }}"
+                                                    href="{{ route('admin.posts.show', $postContent->post_id) }}"
                                                     class="text-blue-500 hover:text-blue-700">{{ $postContent->post->title }}</a></td>
                                             </td>
 
                                             <td class="py-3 px-6">
-                                                <a href="{{ route('admin.posts.show', $postContent->post->id) }}"
+                                                <a href="{{ route('admin.post_contents.show', $postContent->id) }}"
                                                     class="inline-flex bg-blue-500 hover:bg-blue-700 transition text-white font-bolds  py-2 px-4 rounded ">
                                                     <i class="fas fa-eye"></i>
                                                 </a>

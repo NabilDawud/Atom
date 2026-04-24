@@ -48,7 +48,7 @@
 
                                                 @if ($client->image)
                                                     <img src="{{ asset($client->image->path) }}" alt="Client Image"
-                                                        class="w-16 h-16 object-cover rounded">
+                                                        class="w-auto h-12 object-cover rounded">
                                                 @else
                                                     <div
                                                         class="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 flex items-center justify-center">

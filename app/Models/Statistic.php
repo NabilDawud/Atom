@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Statistic extends Model
 {
     use SoftDeletes;
-        protected $guarded = [];    
+        protected $guarded = [];
 
+    protected $with = ['image'];
         public function image()
         {
             return $this->morphOne(Image::class, 'imageable');

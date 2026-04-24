@@ -51,7 +51,7 @@
                                             <td class="py-3 px-6">
                                                 @if ($client->image)
                                                     <img src="{{ asset($client->image->path) }}" alt="Client Image"
-                                                        class="w-16 h-16 object-cover rounded">
+                                                        class="w-auto h-12 object-cover rounded">
                                                 @else
                                                     <span class="text-gray-500">No Image</span>
                                                 @endif

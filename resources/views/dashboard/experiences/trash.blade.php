@@ -54,7 +54,7 @@
                                                         class="w-16 h-16 object-cover rounded">
                                                 @else
                                                     <div
-                                                        class="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 flex items-center justify-center">
+                                                        class="bg-gray-200 border-2 border-dashed rounded-xl w-auto h-9 flex items-center justify-center">
                                                         <span class="text-gray-500 text-xs">No Image</span>
                                                     </div>
                                                 @endif
@@ -63,10 +63,10 @@
                                                 {{ $experience->job_title }}
                                             </td>
                                             <td class="py-3 px-6">
-                                                {{ $experience->start_date }}
+                                                {{ $experience->start_date->format('M Y') }}
                                             </td>
                                             <td class="py-3 px-6">
-                                                {{ $experience->end_date ?? 'Present' }}
+                                                {{ $experience->end_date ? $experience->end_date->format('M Y') : 'Present' }}
                                             </td>
                                             <td class="py-3 px-6">
                                                 <a href="{{ route('admin.experiences.restore', $experience->id) }}"

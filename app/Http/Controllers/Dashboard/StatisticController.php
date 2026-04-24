@@ -17,7 +17,7 @@ class StatisticController extends Controller
      */
     public function index()
     {
-        $statistics = auth()->user()->statistics()->with('image')->latest('id')->paginate(10);
+        $statistics = auth()->user()->statistics()->latest('id')->paginate(10);
         return view('dashboard.statistics.index', compact('statistics'));
     }
 
@@ -37,7 +37,7 @@ class StatisticController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'value' => 'required|numeric|min:0',
-            'image' => 'required|image|max:2048',
+            'image' => 'required|max:2048',
         ]);
 
         return   DB::transaction(function () use ($request) {
@@ -82,7 +82,7 @@ class StatisticController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'value' => 'required|numeric|min:0',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|max:2048',
         ]);
 
         return   DB::transaction(function () use ($request, $statistic) {
@@ -125,7 +125,7 @@ class StatisticController extends Controller
 
     public function trash()
     {
-        $statistics = auth()->user()->statistics()->onlyTrashed()->with('image')->latest('id')->paginate(10);
+        $statistics = auth()->user()->statistics()->onlyTrashed()->latest('id')->paginate(10);
         return view('dashboard.statistics.trash', compact('statistics'));
     }
 

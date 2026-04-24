@@ -45,15 +45,29 @@
                             </div>
 
                             <div>
-                                <x-input-label for="image" :value="__('Image')" />
-                                <x-text-input id="image"
+                                <x-input-label for="white_image" :value="__('White Image')" />
+                                <x-text-input id="white_image"
                                     class="mt-1 border outline-indigo-500 w-full bg-white px-3 py-2" type="file"
-                                    name="image" :value="old('image', $service->image->path)" />
-                                <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                                    name="white_image" :value="old('white_image', $service->whiteImage->path)" />
+                                <x-input-error :messages="$errors->get('white_image')" class="mt-2" />
                             </div>
-                            @isset($service->image->path)
+                            @isset($service->whiteImage->path)
                                 <div class="-mt-2">
-                                    <img src="{{ asset($service->image->path) }}" alt="{{ $service->name }}"
+                                    <img src="{{ asset($service->whiteImage->path) }}" alt="{{ $service->name }}"
+                                        class="w-24 h-24 object-cover rounded bg-primary p-2 ">
+                                </div>
+                            @endisset
+
+                            <div>
+                                <x-input-label for="black_image" :value="__('Black Image')" />
+                                <x-text-input id="black_image"
+                                    class="mt-1 border outline-indigo-500 w-full bg-white px-3 py-2" type="file"
+                                    name="black_image" :value="old('black_image', $service->blackImage->path)" />
+                                <x-input-error :messages="$errors->get('black_image')" class="mt-2" />
+                            </div>
+                            @isset($service->blackImage->path)
+                                <div class="-mt-2">
+                                    <img src="{{ asset($service->blackImage->path) }}" alt="{{ $service->name }}"
                                         class="w-24 h-24 object-cover rounded ">
                                 </div>
                             @endisset

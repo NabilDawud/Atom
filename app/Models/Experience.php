@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Experience extends Model
 {
     use SoftDeletes;
-    protected $guarded = [];    
+    protected $guarded = [];
+    protected $with = ['image'];
+
+    protected $casts = ['start_date' => 'datetime', 'end_date' => 'datetime'];
 
     public function image()
     {

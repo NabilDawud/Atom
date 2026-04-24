@@ -18,7 +18,7 @@ class ServiceController extends Controller
     {
 
         $services = auth()->user()->services()->latest('id')->paginate(10);
-        $services->load('image');
+
         return view('dashboard.services.index', compact('services'));
     }
 
@@ -38,7 +38,8 @@ class ServiceController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'white_image' => 'nullable|max:2048',
+            'black_image' => 'nullable|max:2048',
         ]);
 
         return   DB::transaction(function () use ($request) {
@@ -52,9 +53,15 @@ class ServiceController extends Controller
             //     'user_id' => auth()->id(), هان لازم اكتبه
             // ]);
 
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('uploads/services', 'custom');
-                $service->image()->create(['path' => $imagePath]);
+            foreach (['white_image' => 'white', 'black_image' => 'black'] as $input => $type) {
+                if ($request->hasFile($input)) {
+                    $path = $request->file($input)->store('uploads/services/' . $type, 'custom');
+
+                    $service->images()->create([
+                        'path' => $path,
+                        'type' => $type,
+                    ]);
+                }
             }
             flash()->success('Service created successfully!');
             return redirect()->route('admin.services.index');
@@ -74,6 +81,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
+
         return view('dashboard.services.edit', compact('service'));
     }
 
@@ -86,7 +94,8 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'white_image' => 'nullable|max:2048',
+            'black_image' => 'nullable|max:2048',
         ]);
 
         return   DB::transaction(function () use ($request, $service, $validated) {
@@ -94,17 +103,23 @@ class ServiceController extends Controller
                 'name' => $validated['name'],
                 'content' => $validated['content'],
             ]);
-            if ($request->hasFile('image')) {
 
-                if ($service->image) {
-                    File::delete($service->image->path);
-                    $imagePath = $request->file('image')->store('uploads/services', 'custom');
-                    $service->image->update(['path' => $imagePath]);
-                } else {
-                    $imagePath = $request->file('image')->store('uploads/services', 'custom');
-                    $service->image()->create(['path' => $imagePath]);
+
+            foreach (['white_image' => 'white', 'black_image' => 'black'] as $input => $type) {
+                if ($request->hasFile($input)) {
+                    $oldImage = $service->images->where('type', $type)->first();
+                    if ($oldImage) {
+                        File::delete($oldImage->path);
+                        $imagePath = $request->file($input)->store('uploads/services/' . $type, 'custom');
+                        $oldImage->update(['path' => $imagePath]);
+                    } else {
+                        $imagePath = $request->file($input)->store('uploads/services/' . $type, 'custom');
+                        $service->images()->create(['path' => $imagePath, 'type' => $type]);
+                    }
                 }
             }
+
+
             flash()->success('Service updated successfully!');
             return redirect()->route('admin.services.index');
         });
@@ -122,7 +137,7 @@ class ServiceController extends Controller
 
     public function trash()
     {
-        $services = auth()->user()->services()->onlyTrashed()->with('image')->latest('id')->paginate(10);
+        $services = auth()->user()->services()->onlyTrashed()->with('images')->latest('id')->paginate(10);
         return view('dashboard.services.trash', compact('services'));
     }
 
@@ -135,8 +150,8 @@ class ServiceController extends Controller
 
     public function forceDelete(Service $service)
     {
-        if ($service->image) {
-            File::delete($service->image->path);
+        foreach ($service->images as $image) {
+            File::delete($image->path);
         }
 
         $service->forceDelete();

@@ -54,15 +54,15 @@
                                             <td class="py-3 px-6">
                                                 @if ($experience->image)
                                                     <img src="{{ asset($experience->image->path) }}"
-                                                        alt="Experience Image" class="w-16 h-16 object-cover rounded">
+                                                        alt="Experience Image" class="w-auto h-9 object-cover rounded">
                                                 @else
                                                     <span class="text-gray-500">No Image</span>
                                                 @endif
                                             </td>
                                             <td class="py-3 px-6">{{ $experience->job_title }}</td>
-                                            <td class="py-3 px-6">{{ $experience->start_date }}</td>
-                                            <td class="py-3 px-6">{{ $experience->end_date ?? 'Present' }}</td>
-                                         
+                                            <td class="py-3 px-6">{{ $experience->start_date->format('M Y') }}</td>
+                                            <td class="py-3 px-6">{{ $experience->end_date ? $experience->end_date->format('M Y') : 'Present' }}</td>
+
                                             <td
                                                 class="py-3
                                                         px-6">

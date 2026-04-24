@@ -8,14 +8,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Service extends Model
 {
     use SoftDeletes;
-      protected $guarded = [];    
+  protected $guarded = [];
 
-      public function image()
+  protected $with = ['images'];
+
+  public function images()
       {
-          return $this->morphOne(Image::class, 'imageable');
+    return $this->morphMany(Image::class, 'imageable');
       }
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault();
     }
+
+  public function  getWhiteImageAttribute()
+  {
+    return $this->images->where('type', 'white')->first();
+  }
+
+
+  public function  getBlackImageAttribute()
+  {
+    return $this->images->where('type', 'black')->first();
+  }
 }

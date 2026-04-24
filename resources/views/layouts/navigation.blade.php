@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('front.index') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <img src="{{ asset('Aassets/img/logo.svg') }}" class="block h-9 w-auto bg-primary p-1.5 rounded" alt="Logo">
+                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
                     </a>
                 </div>
 
@@ -74,7 +75,7 @@
                         <x-dropdown-link :href="route('admin.images.index')">
                             {{ __('Images') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('admin.settings.index')">
+                        <x-dropdown-link :href="route('admin.settings')">
                             {{ __('Settings') }}
                         </x-dropdown-link>
 
@@ -160,7 +161,7 @@
                 <x-responsive-nav-link :href="route('admin.images.index')"> 
                     {{ __('Images') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('admin.settings.index')">
+                <x-responsive-nav-link :href="route('admin.settings')">
                     {{ __('Settings') }}
                 </x-responsive-nav-link>
 

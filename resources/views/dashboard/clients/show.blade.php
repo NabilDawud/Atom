@@ -32,7 +32,7 @@
                             <strong>Image:</strong>
                             @if ($client->image)
                                 <img src="{{ asset($client->image->path) }}" alt="Client Image"
-                                    class="w-24 h-24 object-cover rounded hover:scale-105 transition">
+                                    class="w-auto h-12 object-cover rounded hover:scale-105 transition">
                             @endif
                         </div>
                     </div>

@@ -57,29 +57,28 @@ class ProfileController extends Controller
 
             auth()->user()->update($request->only('mobile'));
 
-        auth()->user()->profile()->updateOrCreate([
-            'user_id' => auth()->id(),
-        ], [
-            'job' => $request->job,
-            'description' => $request->description,
-        ]);
-
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('uploads', 'custom');
-
-            if (auth()->user()->profile && auth()->user()->profile->image) {
-                File::delete(auth()->user()->profile->image->path);
-            }
-        }
-
-        if (isset($path)) {
-
-            auth()->user()->profile->image()->updateOrCreate([], [
-                'path' => $path,
+            auth()->user()->profile()->updateOrCreate([
+                'user_id' => auth()->id(),
+            ], [
+                'job' => $request->job,
+                'description' => $request->description,
             ]);
-        }
-        flash()->success('Profile updated successfully.');
-        return redirect()->route('profile.edit');
+
+            if ($request->hasFile('image')) {
+                if (auth()->user()->profile && auth()->user()->profile->image) {
+                    File::delete(auth()->user()->profile->image->path);
+                }
+                $path = $request->file('image')->store('uploads', 'custom');
+            }
+
+            if (isset($path)) {
+
+                auth()->user()->profile->image()->updateOrCreate([], [
+                    'path' => $path,
+                ]);
+            }
+            flash()->success('Profile updated successfully.');
+            return redirect()->route('profile.edit');
         });
     }
 

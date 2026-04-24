@@ -67,11 +67,11 @@
                             @isset($experience->image->path)
                                 <div class="-mt-2">
                                     <img src="{{ asset($experience->image->path) }}" alt="{{ $experience->name }}"
-                                        class="w-24 h-24 object-cover rounded ">
+                                        class="w-auto h-18 object-cover rounded ">
                                 </div>
                             @endisset
 
-                            <div class="flex items-center mt-4">
+                            <div class="flex items-center mt-8">
                                 <x-primary-button>
                                     {{ __('Update Experience') }}
                                 </x-primary-button>

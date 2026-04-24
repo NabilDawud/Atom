@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Posts</title>
+    <title>Post Content</title>
 </head>
 
 <body>
@@ -13,10 +13,10 @@
         <x-slot name="header">
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Posts') }}
+                    {{ __('Post Content') }}
                 </h2>
 
-                <a href="{{ route('admin.posts.index') }}"
+                <a href="{{ route('admin.post_contents.index') }}"
                     class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
                     {{ __('Return Back') }}
                 </a>
@@ -34,45 +34,32 @@
                                 <thead class="bg-gray-900 text-white uppercase text-sm tracking-wider">
                                     <tr>
                                         <th class="py-3 px-6 text-left">ID</th>
-                                        <th class="py-3 px-6 text-left">Image</th>
                                         <th class="py-3 px-6 text-left">Title</th>
-                                        <th class="py-3 px-6 text-left">Published At</th>
-                                        <th class="py-3 px-6 text-left">Categories</th>
-                                        <th class="py-3 px-6 text-left">Actions</th>
+                                        <th class="py-3 px-6 text-left">Type</th>
+                                        <th class="py-3 px-6 text-left">Order</th>
+                                        <th class="py-3 px-6 text-left">Post</th>
+                                        <th class="py-3 px-6 text-left" width="220px">Actions</th>
 
                                     </tr>
                                 </thead>
 
                                 <tbody class="text-gray-700 text-sm divide-y divide-gray-200"">
-                                    @forelse ($posts as $post)
+                                    @forelse ($postContents as $postContent)
                                         <tr class="border-b hover:bg-gray-100 transition ">
-                                            <td class="py-3 px-6">{{ $post->id }}</td>
-                                            <td class="py-3 px-6">
-                                                @if ($post->image)
-                                                    <img src="{{ asset($post->image->path) }}" alt="{{ $post->title }}"
-                                                        class="w-16 h-16 object-cover rounded">
-                                                @else
-                                                    <span class="text-gray-500">No Image</span>
-                                                @endif
-                                            </td>
-                                            <td class="py-3 px-6">{{ $post->title }}</td>
-                                            <td class="py-3 px-6">{{ $post->published_at->diffForHumans() }}</td>
-                                            <td class="py-3 px-6">
-                                                @forelse ($post->categories->take(4) as $cat)
-                                                    <a href="{{ route('admin.categories.cat-Posts', $cat->id) }}"
-                                                        class="inline-block bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full mb-1">{{ $cat->name }}</a>
-                                                @empty
-                                                    <span
-                                                        class="inline-block bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full mb-1">No
-                                                        category</span>
-                                                @endforelse
+                                            <td class="py-3 px-6">{{ $postContent->id }}</td>
+                                            <td class="py-3 px-6">{{ $postContent->title }}</td>
+                                            <td class="py-3 px-6">{{ $postContent->type }}</td>
+                                            <td class="py-3 px-6">{{ $postContent->order }}</td>
+                                            <td class="py-3 px-6"> <a class="text-blue-500 hover:text-blue-700"
+                                                    href="{{ route('admin.posts.show', $postContent->post_id) }}">{{ $postContent->post->title }}</a>
                                             </td>
                                             <td class="py-3 px-6">
-                                                <a href="{{ route('admin.posts.restore', $post->id) }}"
+                                                <a href="{{ route('admin.post_contents.restore', $postContent->id) }}"
                                                     class="inline-flex bg-amber-400 hover:bg-amber-500 transition text-white font-bolds  py-2 px-4 rounded">
                                                     <i class="fas fa-undo"></i>
                                                 </a>
-                                                <form action="{{ route('admin.posts.forceDelete', $post->id) }}"
+                                                <form
+                                                    action="{{ route('admin.post_contents.forceDelete', $postContent->id) }}"
                                                     method="POST" class="inline-block">
                                                     @csrf
                                                     @method('DELETE')
@@ -95,7 +82,7 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    {{ $posts->links() }}
+                    {{ $postContents->links() }}
 
                 </div>
             </div>

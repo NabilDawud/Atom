@@ -43,11 +43,18 @@
                                 <x-input-error :messages="$errors->get('content')" class="mt-2" />
                             </div>
                             <div>
-                                <x-input-label for="image" :value="__('Image')" />
-                                <x-text-input id="image"
+                                <x-input-label for="white_image" :value="__('White Image')" />
+                                <x-text-input id="white_image"
                                     class="block mt-1 border outline-indigo-500 w-full bg-white px-3 py-2"
-                                    type="file" name="image" accept="image/*" value="{{ old('image') }}" />
-                                <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                                    type="file" name="white_image" accept="image/*" value="{{ old('white_image') }}" />
+                                <x-input-error :messages="$errors->get('white_image')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="black_image" :value="__('Black Image')" />
+                                <x-text-input id="black_image"
+                                    class="block mt-1 border outline-indigo-500 w-full bg-white px-3 py-2"
+                                    type="file" name="black_image" accept="image/*" value="{{ old('black_image') }}" />
+                                <x-input-error :messages="$errors->get('black_image')" class="mt-2" />
                             </div>
 
                             <div class="flex items-center mt-4">

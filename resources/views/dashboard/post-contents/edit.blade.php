@@ -128,7 +128,21 @@
     <script>
         addEventListener('click', function(e) {
             if (e.target.classList.contains('remove-content')) {
-                e.target.closest('.mb-4').remove();
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "If you click on remove button it will delete the content permanently.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Change it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        e.target.closest('.mb-4').remove();
+                        updateIndexes();
+                    }
+                });
+
             }
         });
 
@@ -136,7 +150,7 @@
             if (this.value != {{ $post->id }}) {
                 Swal.fire({
                     title: "Are you sure?",
-                    text: "You won't be able to revert this! And If you click on update button it will change the contents of this contents to the selected post.",
+                    text: "If you click on update button it will change the old contents to the selected post by this content.",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
@@ -151,6 +165,29 @@
 
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            Sortable.create(document.getElementById('contents-wrapper'), {
+                animation: 150,
+                onEnd: function() {
+                    updateIndexes();
+                }
+            });
+        });
+
+        function updateIndexes() {
+            document.querySelectorAll('#contents-wrapper > div').forEach((el, index) => {
+                el.querySelectorAll('input, textarea, select').forEach(input => {
+                    if (input.name) {
+                        input.name = input.name.replace(/contents\[\d+\]/, `contents[${index}]`);
+                    }
+
+                    if (input.id) {
+                        input.id = input.id.replace(/contents\[\d+\]/, `contents[${index}]`);
+                    }
+                });
+            });
+        }
 
         let counter = {{ $post->post_contents->count() }};
         document.querySelector('#add-content').addEventListener('click', function() {
@@ -192,6 +229,8 @@
 
             wrapper.insertAdjacentElement('beforeend', contentBlock);
             index++;
+
+            updateIndexes();
         });
     </script>
 

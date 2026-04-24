@@ -16,10 +16,16 @@
                     {{ $post->title . ' ' . __('Details') }}
 
                 </h2>
-                <a href="{{ route('admin.posts.index') }}"
-                    class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
-                    {{ __('Return Back') }}
-                </a>
+                <div>
+                    <a href="{{ route('admin.post_contents.index') }}"
+                        class="ms-4 inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 active:bg-blue-900 disabled:opacity-25 transition">
+                        {{ __('Return To Post Contents') }}
+                    </a>
+                    <a href="{{ route('admin.posts.index') }}"
+                        class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
+                        {{ __('Return To Posts') }}
+                    </a>
+                </div>
             </div>
         </x-slot>
 

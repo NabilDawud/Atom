@@ -17,7 +17,6 @@ class ClientController extends Controller
     public function index()
     {
         $clients = auth()->user()->clients()->latest('id')->paginate(10);
-        $clients->load('image');
         return view('dashboard.clients.index', compact('clients'));
     }
 
@@ -35,7 +34,7 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|max:2048',
+            'image' => 'required|max:2048',
         ]);
 
         return   DB::transaction(function () use ($request) {
@@ -59,7 +58,6 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        $client->load('image');
         return view('dashboard.clients.show', compact('client'));
     }
 
@@ -68,7 +66,6 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        $client->load('image');
         return view('dashboard.clients.edit', compact('client'));
     }
 
@@ -80,7 +77,7 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $request->validate([
-            'image' => 'required|image|max:2048',
+            'image' => 'required|max:2048',
         ]);
 
         return   DB::transaction(function () use ($request, $client) {

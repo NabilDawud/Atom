@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Statistic::class);
     }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
 }

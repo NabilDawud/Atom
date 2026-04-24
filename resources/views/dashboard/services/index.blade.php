@@ -38,7 +38,8 @@
                                 <thead class="bg-gray-900 text-white uppercase text-sm tracking-wider">
                                     <tr>
                                         <th class="py-3 px-6 text-left">ID</th>
-                                        <th class="py-3 px-6 text-left">Image</th>
+                                        <th class="py-3 px-6 text-left">White Image</th>
+                                        <th class="py-3 px-6 text-left">Black Image</th>
                                         <th class="py-3 px-6 text-left">Name</th>
                                         <th class="py-3 px-6 text-left">Actions</th>
 
@@ -50,10 +51,21 @@
                                         <tr class="border-b hover:bg-gray-100 transition ">
                                             <td class="py-3 px-6">{{ $service->id }}</td>
                                             <td class="py-3 px-6">
-                                                @if ($service->image)
-                                                    <img src="{{ asset($service->image->path) }}" alt="{{ $service->name }}" class="w-16 h-16 object-cover rounded">
+                                                @if ($service->white_image)
+                                                    <img src="{{ asset($service->white_image->path) }}"
+                                                        alt="{{ $service->name }}"
+                                                        class="w-16 h-16 object-cover rounded bg-primary p-0.5">
                                                 @else
-                                                    <span class="text-gray-500">No Image</span>
+                                                    <span class="text-gray-500">No White Image</span>
+                                                @endif
+                                            </td>
+                                            <td class="py-3 px-6">
+                                                @if ($service->black_image)
+                                                    <img src="{{ asset($service->black_image->path) }}"
+                                                        alt="{{ $service->name }}"
+                                                        class="w-16 h-16 object-cover rounded">
+                                                @else
+                                                    <span class="text-gray-500">No Black Image</span>
                                                 @endif
                                             </td>
                                             <td class="py-3 px-6">{{ $service->name }}</td>

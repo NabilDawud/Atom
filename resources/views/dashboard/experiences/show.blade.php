@@ -30,13 +30,13 @@
                         <p><strong>ID:</strong> {{ $experience->id }}</p>
                         <p><strong>Job Title:</strong> {{ $experience->job_title }}</p>
                         <p><strong>Description:</strong> {{ $experience->description }}</p>
-                        <p><strong>Start Date:</strong> {{ $experience->start_date }}</p>
-                        <p><strong>End Date:</strong> {{ $experience->end_date ?? 'Present' }}</p>
+                        <p><strong>Start Date:</strong> {{ $experience->start_date->format('d, M Y') }}</p>
+                        <p><strong>End Date:</strong> {{ $experience->end_date ? $experience->end_date->format('d, M Y') : 'Present' }}</p>
                         <div class="mt-4 flex items-center gap-4">
                             <strong>Image:</strong>
                             @if ($experience->image)
                                 <img src="{{ asset($experience->image->path) }}" alt="Experience Image"
-                                    class="w-100 h-100 object-cover rounded hover:scale-105 transition">
+                                    class="w-auto h-22 object-cover rounded hover:scale-105 transition">
                             @else
                                 <span class="text-gray-500">No Image</span>
                             @endif

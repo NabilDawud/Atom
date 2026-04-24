@@ -17,7 +17,7 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        $experiences = auth()->user()->experiences()->with('image')->latest('id')->paginate(10);
+        $experiences = auth()->user()->experiences()->latest('id')->paginate(10);
         return view('dashboard.experiences.index', compact('experiences'));
     }
 
@@ -39,7 +39,7 @@ class ExperienceController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|max:2048',
         ]);
         return   DB::transaction(function () use ($request) {
             $experience = auth()->user()->experiences()->create([
@@ -87,7 +87,7 @@ class ExperienceController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|max:2048',
         ]);
         return   DB::transaction(function () use ($request, $experience) {
             $experience->update([
@@ -126,7 +126,7 @@ class ExperienceController extends Controller
 
     public function trash()
     {
-        $experiences = auth()->user()->experiences()->onlyTrashed()->with('image')->latest('id')->paginate(10);
+        $experiences = auth()->user()->experiences()->onlyTrashed()->latest('id')->paginate(10);
         return view('dashboard.experiences.trash', compact('experiences'));
     }
 
@@ -140,6 +140,10 @@ class ExperienceController extends Controller
 
     public function forceDelete(Experience $experience)
     {
+        if ($experience->image) {
+            File::delete($experience->image->path);
+        }
+
         // Delete the experience permanently
         $experience->forceDelete();
 

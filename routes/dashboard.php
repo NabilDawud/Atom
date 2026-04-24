@@ -10,7 +10,6 @@ use App\Http\Controllers\Dashboard\PortfolioController;
 use App\Http\Controllers\Dashboard\PostContentController;
 use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Dashboard\ServiceController;
-use App\Http\Controllers\Dashboard\SettingController;
 use App\Http\Controllers\Dashboard\SkillController;
 use App\Http\Controllers\Dashboard\StatisticController;
 use App\Http\Controllers\ProfileController;
@@ -18,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/settings', [DashboardController::class, 'settings'])->middleware(['auth', 'verified'])->name('admin.settings');
+Route::put('/settings', [DashboardController::class, 'settingsave'])->middleware(['auth', 'verified']);
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'storeAndUpdate'])->name('profiles.storeAndUpdate');
@@ -68,7 +69,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::delete('/post_contents/{post_content}/force-delete', [PostContentController::class, 'forceDelete'])->withTrashed()->name('post_contents.forceDelete');
     Route::resource('post_contents', PostContentController::class);
 
-    Route::resource('contacts', ContactController::class);
+    Route::get('/contacts/trash', [ContactController::class, 'trash'])->name('contacts.trash');
+    Route::get('/contacts/{contact}/restore', [ContactController::class, 'restore'])->withTrashed()->name('contacts.restore');
+    Route::delete('/contacts/{contact}/force-delete', [ContactController::class, 'forceDelete'])->withTrashed()->name('contacts.forceDelete');
+    Route::resource('contacts', ContactController::class)->only(['index', 'show', 'destroy']);
+
     Route::resource('images', ImageController::class);
-    Route::resource('settings', SettingController::class);
 });

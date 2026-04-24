@@ -126,7 +126,7 @@
             contentBlock.innerHTML = `                
                 <div class="mt-1.5">
                     <x-input-label for="contents[${index}][title]" :value="__('Title')" />
-                    <x-text-input id="contents[${index}][title]" class="block mt-1 w-full" type="text" name="contents[${index}][title]" required autofocus value="{{ old('contents.${index}.title') }}" />
+                    <x-text-input id="contents[${index}][title]" class="block mt-1 w-full" type="text" name="contents[${index}][title]" autofocus value="{{ old('contents.${index}.title') }}" />
                     <x-input-error :messages="$errors->get('contents.${index}.title')" class="mt-2" />
                 </div>    
                 

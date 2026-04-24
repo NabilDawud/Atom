@@ -18,7 +18,7 @@ class PortfolioController extends Controller
     public function index()
     {
         $portfolios = auth()->user()->portfolios()->latest('id')->paginate(10);
-        $portfolios->load('image');
+
         return view('dashboard.portfolios.index', compact('portfolios'));
     }
 
@@ -36,7 +36,8 @@ class PortfolioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'link' => 'nullable|url',
+            // 'link' => 'nullable|url',
+            'link' => 'nullable',
             'image' => 'nullable|image|max:2048',
         ]);
         return   DB::transaction(function () use ($request) {
@@ -68,6 +69,7 @@ class PortfolioController extends Controller
      */
     public function edit(Portfolio $portfolio)
     {
+
         return view('dashboard.portfolios.edit', compact('portfolio'));
     }
 
@@ -77,7 +79,7 @@ class PortfolioController extends Controller
     public function update(Request $request, Portfolio $portfolio)
     {
         $request->validate([
-            'link' => 'nullable|url',
+            'link' => 'nullable',
             'image' => 'nullable|image|max:2048',
         ]);
 
@@ -117,7 +119,7 @@ class PortfolioController extends Controller
 
     public function trash()
     {
-        $portfolios = auth()->user()->portfolios()->onlyTrashed()->with('image')->latest('id')->paginate(10);
+        $portfolios = auth()->user()->portfolios()->onlyTrashed()->latest('id')->paginate(10);
         return view('dashboard.portfolios.trash', compact('portfolios'));
     }
 
