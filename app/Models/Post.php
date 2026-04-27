@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasSlug;
     protected $guarded = [];
 
     protected $casts = ['published_at' => 'datetime'];
+
+
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault();
@@ -26,7 +30,8 @@ class Post extends Model
         return $this->hasMany(PostContent::class)->orderBy('order');
     }
 
-    public function image(){
+    public function image()
+    {
         return $this->morphOne(Image::class, 'imageable');
     }
 }

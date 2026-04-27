@@ -259,21 +259,36 @@
                             target="_blank">ThemeWagon</a> • All right reserved, ATOM.
                     </p>
                     <div class="flex items-center justify-center pt-5 sm:justify-start sm:pt-0">
-                        <a href="/">
-                            <i class="bx bxl-facebook-square text-2xl text-white hover:text-yellow"></i>
-                        </a>
-                        <a href="/" class="pl-4">
-                            <i class="bx bxl-twitter text-2xl text-white hover:text-yellow"></i>
-                        </a>
-                        <a href="/" class="pl-4">
-                            <i class="bx bxl-dribbble text-2xl text-white hover:text-yellow"></i>
-                        </a>
-                        <a href="/" class="pl-4">
-                            <i class="bx bxl-linkedin text-2xl text-white hover:text-yellow"></i>
-                        </a>
-                        <a href="/" class="pl-4">
-                            <i class="bx bxl-instagram text-2xl text-white hover:text-yellow"></i>
-                        </a>
+                        @isset($settings['facebook'])
+                            <a href="{{ $settings['facebook'] }}" target="_blank">
+                                <i class="bx bxl-facebook-square text-2xl text-white hover:text-yellow"></i>
+                            </a>
+                        @endisset
+                        @isset($settings['twitter'])
+                            <a href="{{ $settings['twitter'] }}" target="_blank" class="pl-4">
+                                <i class="bx bxl-twitter text-2xl text-white hover:text-yellow"></i>
+                            </a>
+                        @endisset
+                        @isset($settings['github'])
+                            <a href="{{ $settings['github'] }}" target="_blank" class="pl-4">
+                                <i class="bx bxl-github text-2xl text-white hover:text-yellow"></i>
+                            </a>
+                        @endisset
+                        @isset($settings['dribbble'])
+                            <a href="{{ $settings['dribbble'] }}" target="_blank" class="pl-4">
+                                <i class="bx bxl-dribbble text-2xl text-white hover:text-yellow"></i>
+                            </a>
+                        @endisset
+                        @isset($settings['linkedin'])
+                            <a href="{{ $settings['linkedin'] }}" target="_blank" class="pl-4">
+                                <i class="bx bxl-linkedin text-2xl text-white hover:text-yellow"></i>
+                            </a>
+                        @endisset
+                        @isset($settings['instagram'])
+                            <a href="{{ $settings['instagram'] }}" target="_blank" class="pl-4">
+                                <i class="bx bxl-instagram text-2xl text-white hover:text-yellow"></i>
+                            </a>
+                        @endisset
                     </div>
                 </div>
             </div>

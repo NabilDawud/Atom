@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Posts</title>
+    <title>Subscribers</title>
 </head>
 
 <body>
@@ -13,16 +13,12 @@
         <x-slot name="header">
             <div class="flex justify-between items-center">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Posts') }}
+                    {{ __('Subscribers') }}
                 </h2>
                 <div class="trashAndCreateButtons flex items-center">
-                    <a href="{{ route('admin.posts.trash') }}"
-                        class="ms-4 inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
-                        {{ __('View Trashed Posts') }}
-                    </a>
-                    <a href="{{ route('admin.posts.create') }}"
+                    <a href="{{ redirect()->back()->getTargetUrl() }}"
                         class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
-                        {{ __('Add New Post') }}
+                        {{ __('Return Back') }}
                     </a>
                 </div>
             </div>
@@ -38,50 +34,29 @@
                                 <thead class="bg-gray-900 text-white uppercase text-sm tracking-wider">
                                     <tr>
                                         <th class="py-3 px-6 text-left">ID</th>
-                                        <th class="py-3 px-6 text-left">Image</th>
-                                        <th class="py-3 px-6 text-left">Title</th>
-                                        <th class="py-3 px-6 text-left">Published At</th>
-                                        <th class="py-3 px-6 text-left">Categories</th>
-                                        <th class="py-3 px-6 text-left" width="220px">Actions</th>
+                                        <th class="py-3 px-6 text-left">Email</th>
+                                        <th class="py-3 px-6 text-left">Status</th>
+                                        <th class="py-3 px-6 text-left">Actions</th>
 
                                     </tr>
                                 </thead>
 
                                 <tbody class="text-gray-700 text-sm divide-y divide-gray-200"">
-                                    @forelse ($posts as $post)
+                                    @forelse ($subscribers as $subscriber)
                                         <tr class="border-b hover:bg-gray-100 transition ">
-                                            <td class="py-3 px-6">{{ $post->id }}</td>
-                                            @if ($post->image)
-                                                <td class="py-3 px-6">
-                                                    <img src="{{ asset($post->image->path) }}" alt="{{ $post->title }}"
-                                                        class="w-16 h-16 object-cover">
-                                                </td>
-                                            @else
-                                                <td class="py-3 px-6">No Image</td>
-                                            @endif
-                                            <td class="py-3 px-6">{{ $post->title }}</td>
-                                            <td class="py-3 px-6">{{ $post->published_at->diffForHumans() }} </td>
+                                            <td class="py-3 px-6">{{ $subscriber->id }}</td>
+                                            <td class="py-3 px-6">{{ $subscriber->email }}</td>
                                             <td class="py-3 px-6">
-                                                @forelse ($post->categories->take(4) as $category)
-                                                    <a href="{{ route('admin.categories.show', $category->id) }}"
-                                                        class="inline-block bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full mb-1">{{ $category->name }}</a>
-                                                @empty
+                                                @if ($subscriber->is_active)
                                                     <span
-                                                        class="inline-block bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full mb-1">No
-                                                        category</span>
-                                                @endforelse
+                                                        class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">Active</span>
+                                                @else
+                                                    <span
+                                                        class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">Inactive</span>
+                                                @endif
                                             </td>
-
                                             <td class="py-3 px-6">
-                                                <a href="{{ route('admin.posts.show', $post) }}"
-                                                    class="inline-flex bg-blue-500 hover:bg-blue-700 transition text-white font-bolds  py-2 px-4 rounded ">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ route('admin.posts.edit', $post) }}"
-                                                    class="inline-flex bg-green-500 hover:bg-green-700 transition text-white font-bolds  py-2 px-4 rounded ">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form action="{{ route('admin.posts.destroy', $post) }}"
+                                                <form action="{{ route('admin.subscribers', $subscriber->id) }}"
                                                     method="POST" class="inline-block">
                                                     @csrf
                                                     @method('DELETE')
@@ -94,17 +69,24 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="10" class="py-3 px-6 text-center">No posts found.</td>
+                                            <td colspan="10" class="py-3 px-6 text-center">No subscribers found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
 
                             </table>
                         </div>
+
+                        <form action="{{ route('admin.subscribers') }}" method="POST" class="mt-8">
+                            @csrf
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700 transition">
+                                Send Latest News
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div class="mt-5">
-                    {{ $posts->links() }}
+                    {{ $subscribers->links() }}
 
                 </div>
             </div>

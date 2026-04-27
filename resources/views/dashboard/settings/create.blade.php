@@ -15,7 +15,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     {{ __('Settings') }}
                 </h2>
-                <a
+                <a href="{{ redirect()->back()->getTargetUrl() }}"
                     class="ms-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 active:bg-gray-900 disabled:opacity-25 transition">
                     {{ __('Return Back') }}
                 </a>
@@ -40,7 +40,7 @@
                             @isset($settings['logo'])
                                 <div>
                                     <img src="{{ asset($settings['logo']) }}" alt="Current Logo"
-                                        class="w-24 h-24 object-cover rounded">
+                                        class="h-12 w-auto object-cover rounded bg-primary p-1">
                                 </div>
                             @endisset
                             <div>
@@ -56,6 +56,13 @@
                                     value="{{ old('twitter', $settings['twitter'] ?? '') }}" />
                                 <x-input-error :messages="$errors->get('twitter')" class="mt-2" />
                             </div>
+                            <div>
+                                <x-input-label for="github" :value="__('GitHub URL')" />
+                                <x-text-input id="github" class="block mt-1 w-full" type="text" name="github"
+                                    value="{{ old('github', $settings['github'] ?? '') }}" />
+                                <x-input-error :messages="$errors->get('github')" class="mt-2" />
+                            </div>
+
                             <div>
                                 <x-input-label for="dribbble" :value="__('Dribbble URL')" />
                                 <x-text-input id="dribbble" class="block mt-1 w-full" type="text" name="dribbble"
@@ -81,13 +88,7 @@
                                     value="{{ old('about_title', $settings['about_title'] ?? '') }}" />
                                 <x-input-error :messages="$errors->get('about_title')" class="mt-2" />
                             </div>
-                            <div>
-                                <x-input-label for="about_title" :value="__('About Title')" />
-                                <x-text-input id="about_title" class="block mt-1 w-full" type="text"
-                                    name="about_title"
-                                    value="{{ old('about_title', $settings['about_title'] ?? '') }}" />
-                                <x-input-error :messages="$errors->get('about_title')" class="mt-2" />
-                            </div>
+
                             <div>
                                 <x-input-label for="service_title" :value="__('Service Title')" />
                                 <x-text-input id="service_title" class="block mt-1 w-full" type="text"
@@ -165,6 +166,13 @@
                                     value="{{ old('contact_sub_title', $settings['contact_sub_title'] ?? '') }}" />
                                 <x-input-error :messages="$errors->get('contact_sub_title')" class="mt-2" />
                             </div>
+                            <div>
+                                <x-input-label for="contact_description" :value="__('Contact Description')" />
+                                <x-text-input id="contact_description" class="block mt-1 w-full" type="text"
+                                    name="contact_description"
+                                    value="{{ old('contact_description', $settings['contact_description'] ?? '') }}" />
+                                <x-input-error :messages="$errors->get('contact_description')" class="mt-2" />
+                            </div>
 
                             <div>
                                 <x-input-label for="location" :value="__('Location')" />
@@ -173,18 +181,30 @@
                                 <x-input-error :messages="$errors->get('location')" class="mt-2" />
                             </div>
                             <div>
-                                <x-input-label for="up_to_date_title" :value="__('Up to Date Title')" />
-                                <x-text-input id="up_to_date_title" class="block mt-1 w-full" type="text"
-                                    name="up_to_date_title"
-                                    value="{{ old('up_to_date_title', $settings['up_to_date_title'] ?? '') }}" />
-                                <x-input-error :messages="$errors->get('up_to_date_title')" class="mt-2" />
+                                <x-input-label for="keep" :value="__('Before First Up to Date Title (not bold)')" />
+                                <x-text-input id="keep" class="block mt-1 w-full" type="text" name="keep"
+                                    value="{{ old('keep', $settings['keep'] ?? '') }}" />
+                                <x-input-error :messages="$errors->get('keep')" class="mt-2" />
                             </div>
                             <div>
-                                <x-input-label for="copyright_year" :value="__('Copyright Year')" />
-                                <x-text-input id="copyright_year" class="block mt-1 w-full" type="text"
-                                    name="copyright_year"
-                                    value="{{ old('copyright_year', $settings['copyright_year'] ?? '') }}" />
-                                <x-input-error :messages="$errors->get('copyright_year')" class="mt-2" />
+                                <x-input-label for="first_up_to_date_title" :value="__('First Up to Date Title (bold)')" />
+                                <x-text-input id="first_up_to_date_title" class="block mt-1 w-full" type="text"
+                                    name="first_up_to_date_title"
+                                    value="{{ old('first_up_to_date_title', $settings['first_up_to_date_title'] ?? '') }}" />
+                                <x-input-error :messages="$errors->get('first_up_to_date_title')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="second_up_to_date_title" :value="__('Second Up to Date Title')" />
+                                <x-text-input id="second_up_to_date_title" class="block mt-1 w-full" type="text"
+                                    name="second_up_to_date_title"
+                                    value="{{ old('second_up_to_date_title', $settings['second_up_to_date_title'] ?? '') }}" />
+                                <x-input-error :messages="$errors->get('second_up_to_date_title')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="copyright" :value="__('Copyright')" />
+                                <x-text-input id="copyright" class="block mt-1 w-full" type="text"
+                                    name="copyright" value="{{ old('copyright', $settings['copyright'] ?? '') }}" />
+                                <x-input-error :messages="$errors->get('copyright')" class="mt-2" />
                             </div>
 
 

@@ -68,11 +68,11 @@
                                                 @endforelse
                                             </td>
                                             <td class="py-3 px-6">
-                                                <a href="{{ route('admin.posts.restore', $post->id) }}"
+                                                <a href="{{ route('admin.posts.restore', $post) }}"
                                                     class="inline-flex bg-amber-400 hover:bg-amber-500 transition text-white font-bolds  py-2 px-4 rounded">
                                                     <i class="fas fa-undo"></i>
                                                 </a>
-                                                <form action="{{ route('admin.posts.forceDelete', $post->id) }}"
+                                                <form action="{{ route('admin.posts.forceDelete', $post) }}"
                                                     method="POST" class="inline-block">
                                                     @csrf
                                                     @method('DELETE')

@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/settings', [DashboardController::class, 'settings'])->middleware(['auth', 'verified'])->name('admin.settings');
 Route::put('/settings', [DashboardController::class, 'settingsave'])->middleware(['auth', 'verified']);
+Route::get('/subscribers', [DashboardController::class, 'subscribers'])->middleware(['auth', 'verified'])->name('admin.subscribers');
+Route::post('/subscribers', [DashboardController::class, 'send_email_to_subscribers'])->middleware(['auth', 'verified']);
+Route::delete('/subscribers/{subscriber}', [DashboardController::class, 'destroy_email_subscribers'])->middleware(['auth', 'verified']);
+
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'storeAndUpdate'])->name('profiles.storeAndUpdate');
@@ -73,6 +77,4 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::get('/contacts/{contact}/restore', [ContactController::class, 'restore'])->withTrashed()->name('contacts.restore');
     Route::delete('/contacts/{contact}/force-delete', [ContactController::class, 'forceDelete'])->withTrashed()->name('contacts.forceDelete');
     Route::resource('contacts', ContactController::class)->only(['index', 'show', 'destroy']);
-
-    Route::resource('images', ImageController::class);
 });

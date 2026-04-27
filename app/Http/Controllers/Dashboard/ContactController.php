@@ -19,31 +19,6 @@ class ContactController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => [
-                Rule::requiredIf(!auth()->check()),
-                'string',
-                'max:255'
-            ],
-            'email' => auth()->check() ?  'nullable' : 'required|email|max:255',
-            'message' => 'required|string',
-        ]);
-
-        Contact::create([
-            'user_id' => auth()->id() ?? null,
-            'name' => auth()->check() ? null : $request->name,
-            'email' => auth()->check() ? null : $request->email,
-            'message' => $request->message,
-        ]);
-        flash()->success('Your message has been sent successfully.');
-        return redirect()->back();
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Contact $contact)

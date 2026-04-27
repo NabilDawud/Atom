@@ -34,7 +34,7 @@
                             <div>
                                 <x-input-label for="link" :value="__('Link')" />
                                 <x-text-input id="link" class="block mt-1 w-full" type="text" name="link"
-                                    :value="old('link', $portfolio->link)" required autofocus />
+                                    :value="old('link', $portfolio->link)"  autofocus />
                                 <x-input-error :messages="$errors->get('link')" class="mt-2" />
                             </div>
 

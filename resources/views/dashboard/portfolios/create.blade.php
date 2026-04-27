@@ -32,7 +32,7 @@
                             <div>
                                 <x-input-label for="link" :value="__('Link')" />
                                 <x-text-input id="link" class="block mt-1 w-full" type="text" name="link"
-                                    required autofocus value="{{ old('link') }}" />
+                                     autofocus value="{{ old('link') }}" />
                                 <x-input-error :messages="$errors->get('link')" class="mt-2" />
                             </div>
                             

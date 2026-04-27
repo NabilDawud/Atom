@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendNewsletterJob;
 use App\Models\Setting;
+use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -40,5 +42,26 @@ class DashboardController extends Controller
 
         flash()->success('Settings updated successfully!');
         return redirect()->back();
+    }
+
+    public function subscribers()
+    {
+        $subscribers = Subscriber::latest('id')->paginate(10);
+        return view('dashboard.subscribers.index', compact('subscribers'));
+    }
+
+    public function send_email_to_subscribers()
+    {
+        SendNewsletterJob::dispatch();
+
+        flash()->success('Email sent to subscribers successfully!');
+        return redirect()->route('admin.subscribers');
+    }
+
+    public function destroy_email_subscribers(Subscriber $subscriber)
+    {
+        $subscriber->delete();
+        flash()->success('Subscriber deleted successfully!');
+        return redirect()->route('admin.subscribers');
     }
 }

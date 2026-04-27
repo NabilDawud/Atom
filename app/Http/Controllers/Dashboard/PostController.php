@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
-
+use App\Models\Slug;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -61,6 +61,13 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        if (!$post) {
+            $oldSlug = Slug::where('slug', $post->slug)->first();
+            if ($oldSlug) {
+                return redirect()->route('posts.show', $oldSlug->sluggable);
+            }
+            abort(404);
+        }
         $categories = $post->categories()->with('posts')->latest('id')->paginate(10);
         $post->load(['categories', 'image', 'post_contents' => function ($query) {
             $query->orderBy('order', 'asc');
