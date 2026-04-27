@@ -21,9 +21,9 @@ trait HasSlug
                 $model->slugHistory()->create([
                     'slug' => $model->getOriginal('slug'),
                 ]);
-                
+
                 $model->slug = static::generateUniqueSlug($model->getSlugSource());
-                }
+            }
         });
     }
 
@@ -37,12 +37,18 @@ trait HasSlug
         return 'title'; //  هاي بقدر اغيرها من الموديل اللي بيستخدم التريت لو حبيت 
     }
 
-    public static function generateUniqueSlug($title)
+    public static function generateUniqueSlug($value)
     {
-        $slug = Str::slug($title);
-        $count = self::where('slug', 'LIKE', "{$slug}%")->count();
+        $slug = Str::slug($value);
+        $originalSlug = $slug;
+        $count = 1;
 
-        return $count ? "{$slug}-{$count}" : $slug;
+        while (static::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
+        return $slug;
     }
 
     public function slugHistory()
